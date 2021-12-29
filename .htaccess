@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule ^restful/$ RestProvider.php [QSA,L]
+RewriteRule ^restful/([A-Za-z]+)/([0-9]+)$ RestProvider.php?action=$1&value=$2 [QSA,L]
+RewriteRule ^restful/([A-Za-z]+)/([0-9]+)/$ RestProvider.php?action=$1&value=$2 [QSA,L]
