@@ -1,9 +1,9 @@
 <?php
 
-namespace ITU_API\Logger;
+namespace ITU_API;
 
-use ITU_API\Config\Config as Config;
-use ITU_API\File\File as File;
+use ITU_API\Config as Config;
+use ITU_API\File as File;
 
 define("LOG_TYPE_INFO", 1);
 define("LOG_TYPE_WARNING", 2);

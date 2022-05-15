@@ -1,6 +1,6 @@
 <?php
 
-namespace  ITU_API\File;
+namespace  ITU_API;
 
 class File
 {

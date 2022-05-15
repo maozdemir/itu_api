@@ -1,11 +1,11 @@
 <?php
 
 
-namespace ITU_API\Config;
+namespace ITU_API;
 
 require_once "File.php";
 
-use ITU_API\File\File as File;
+use ITU_API\File as File;
 
 class Config
 {
