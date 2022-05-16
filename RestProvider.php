@@ -5,23 +5,14 @@ require_once "db.php";
 use ITU_API\HTTPHelper as HTTPHelper;
 
 $request_method = $_SERVER['REQUEST_METHOD'];
-$status = 200;
 $action = $_GET['action'];
 $value = $_GET['value'];
 
 $HTTPHelper = new HTTPHelper();
 
 
-if ($request_method != 'GET') {
+if ($request_method != 'GET' || !isset($action) || !isset($value) || $action == '' || $value == '' || $value == 0) {
     $HTTPHelper->header_set(403);
-    exit;
-}
-if (!isset($action)) {
-    $HTTPHelper->header_set(400);
-    exit;
-}
-if ($value == 0) {
-    $HTTPHelper->header_set(400);
     exit;
 }
 
