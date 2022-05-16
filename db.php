@@ -28,7 +28,7 @@ class DatabaseMgr
 
     /**
      * Add new course to database
-     * @param Course $course
+     * @param array $course
      * @return boolean $success
      */
 
@@ -82,7 +82,7 @@ class DatabaseMgr
     /**
      * Get course data
      * @param string $id
-     * @return array
+     * @return array|bool
      */
     static public function get_course($id)
     {
@@ -94,12 +94,13 @@ class DatabaseMgr
                     return $row;
                 }
             } else {
-                return "ERR";
+                return false;
             }
         } else {
             printf("ERR: %s\n", $db->error);
-            return "ERR";
+            return false;
         }
+        return false;
     }
 
     /**
@@ -121,7 +122,7 @@ class DatabaseMgr
     /**
      * Get location data from name
      * @param int $location
-     * @return array
+     * @return array|bool
      */
 
     static public function get_location($location)
@@ -139,6 +140,7 @@ class DatabaseMgr
         } else {
             return false;
         }
+        return false;
     }
 
     /**
@@ -150,7 +152,7 @@ class DatabaseMgr
 
     static public function get_location_name($location_id)
     {
-
+        if ($location_id == '' || $location_id == null) return false;
         $db = DatabaseMgr::dbconnection();
         if ($result = $db->query("SELECT * FROM `locations` WHERE `id` = '$location_id'")) {
             if ($result->num_rows > 0) {
@@ -163,6 +165,7 @@ class DatabaseMgr
         } else {
             return false;
         }
+        return false;
     }
 
     /**
@@ -172,22 +175,13 @@ class DatabaseMgr
      */
     static public function add_location($location)
     {
+        if ($location == '') return false;
         $connection = DatabaseMgr::dbconnection();
         if ($result = $connection->query("SELECT * FROM `locations` WHERE `name` = '$location'")) {
-            if ($result->num_rows > 0) {
-                return false;
-            } else {
-                if ($location != '') {
-                    if ($connection->query("INSERT INTO `locations` (`name`) VALUES ('$location')")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
+            if ($result->num_rows > 0) return false;
+            return $connection->query("INSERT INTO `locations` (`name`) VALUES ('$location')");
         }
+        return false;
     }
 
     /**
@@ -200,33 +194,24 @@ class DatabaseMgr
 
     static public function add_building($location, $code, $name_tr)
     {
+        if ($location == '' || $code == '' || $name_tr == '') return false;
         $connection = DatabaseMgr::dbconnection();
         if ($result = $connection->query("SELECT * FROM `buildings` WHERE `code` = '$code'")) {
-            if ($result->num_rows > 0) {
-                return false;
-            } else {
-                if ($location != '') {
-                    if ($connection->query("INSERT INTO `buildings` (`code`,`name_tr`,`location`) VALUES ('$code','$name_tr','$location')")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
+            if ($result->num_rows > 0)  return false;
+            return $connection->query("INSERT INTO `buildings` (`code`,`name_tr`,`location`) VALUES ('$code','$name_tr','$location')");
         }
+        return false;
     }
 
     /**
      * Returns building data by building ID. If building ID is not found, returns false.
      * @param int $building_id
-     * @return array $building_data
+     * @return array|bool $building_data
      */
 
     static public function get_building($building_id)
     {
-
+        if ($building_id == '') return false;
         $db = DatabaseMgr::dbconnection();
         if ($result = $db->query("SELECT * FROM `buildings` WHERE `id` = '$building_id'")) {
             if ($result->num_rows > 0) {
@@ -240,5 +225,6 @@ class DatabaseMgr
             printf("ERR: %s\n", $db->error);
             return false;
         }
+        return false;
     }
 }
