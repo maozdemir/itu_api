@@ -10,13 +10,15 @@ define("LOG_TYPE_WARNING", 2);
 define("LOG_TYPE_ERROR", 3);
 
 
-class Logger {
+class Logger
+{
 
     private $config;
     private $file;
     private $path;
 
-    function __construct($config_file) {
+    function __construct($config_file)
+    {
         $this->config = new Config($config_file);
         $this->path = $this->config->get("log_path");
         $this->file = new File($this->path, "log.txt");
@@ -25,12 +27,14 @@ class Logger {
         }
     }
 
-    function log($message, $type = LOG_TYPE_INFO) {
-        $message = "[". date("Y-m-d H:i:s") . "] [". $type ."] : " . $message . "\n";
+    function log($message, $type = LOG_TYPE_INFO)
+    {
+        $message = "[" . date("Y-m-d H:i:s") . "] [" . $type . "] : " . $message . "\n";
         $this->file->append($message);
     }
 
-    function error_handler($errno, $errstr, $errfile, $errline) {
+    function error_handler($errno, $errstr, $errfile, $errline)
+    {
         $this->log($errstr, LOG_TYPE_ERROR);
     }
 }
