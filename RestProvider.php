@@ -2,21 +2,26 @@
 require_once "RestfulFn.php";
 require_once "db.php";
 
+use ITU_API\HTTPHelper as HTTPHelper;
+
 $request_method = $_SERVER['REQUEST_METHOD'];
 $status = 200;
 $action = $_GET['action'];
 $value = $_GET['value'];
 
+$HTTPHelper = new HTTPHelper();
+
+
 if ($request_method != 'GET') {
-    header_set(403);
+    $HTTPHelper->header_set(403);
     exit;
 }
 if (!isset($action)) {
-    header_set(400);
+    $HTTPHelper->header_set(400);
     exit;
 }
 if ($value == 0) {
-    header_set(400);
+    $HTTPHelper->header_set(400);
     exit;
 }
 
@@ -27,6 +32,6 @@ if ($action == 'GetCourseQuota' && isset($value)) {
     $return['location'] = DatabaseMgr::get_location_name(DatabaseMgr::get_building($value)['location'])['name'];
     echo json_encode($return);
 } else {
-    header_set(400);
+    $HTTPHelper->header_set(400);
     exit;
 }
