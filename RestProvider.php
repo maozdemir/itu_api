@@ -1,5 +1,5 @@
 <?php
-require_once "RestfulFn.php";
+require_once "HTTPHelper.php";
 require_once "db.php";
 
 use ITU_API\HTTPHelper as HTTPHelper;
