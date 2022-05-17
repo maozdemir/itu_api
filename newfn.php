@@ -2,24 +2,15 @@
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Europe/Istanbul');
 
+require_once "HTTPHelper.php";
+
+use ITU_API\HTTPHelper as HTTPHelper;
+
+$HTTPHelper = new HTTPHelper();
+
 $url = "https://www.sis.itu.edu.tr/TR/ogrenci/ders-programi/ders-programi.php?seviye=LS&derskodu=INS";
 $codes_url = "https://www.sis.itu.edu.tr/TR/ogrenci/ders-programi/ders-programi.php?seviye=LS";
 
-function curl_q($callback, $iconv = true)
-{
-    $cookie = fopen("cook.txt", "w+");
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $callback);
-    curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36");
-    curl_setopt($ch, CURLOPT_COOKIE, $cookie);
-    curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
-    $return = curl_exec($ch);
-    curl_close($ch);
-    if ($iconv) $return = iconv('ISO-8859-9', 'UTF-8', $return);
-    return $return;
-}
 
 /*####################################################################################
  #####################################################################################
@@ -133,8 +124,8 @@ function fetch_codes($payload)
     }
     return $arr;
 }
-$html = curl_q($url);
-$htmlc = curl_q($codes_url);
+$html = $HTTPHelper->curl_q($url);
+$htmlc = $HTTPHelper->curl_q($codes_url);
 
 //var_dump(fetch_codes($htmlc));
 //var_dump(courses($html));

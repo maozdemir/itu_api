@@ -1,13 +1,18 @@
 <?php
-include "db.php";
-include "newfn.php";
+require_once "db.php";
+require_once "newfn.php";
+require_once "HTTPHelper.php";
+
+use ITU_API\HTTPHelper as HTTPHelper;
+
+$HTTPHelper = new HTTPHelper();
 
 $bld_url_tr = "https://www.sis.itu.edu.tr/TR/obs-hakkinda/bina-kodlari.php";
 $bld_url_en = "https://www.sis.itu.edu.tr/EN/about-sis/building-codes.php";
 
 
-$bldg_tr_html = curl_q($bld_url_tr, false);
-$bldg_en_html = curl_q($bld_url_en);
+$bldg_tr_html = $HTTPHelper->curl_q($bld_url_tr, false);
+$bldg_en_html = $HTTPHelper->curl_q($bld_url_en);
 $bldg_tr_html = html_entity_decode($bldg_tr_html);
 
 preg_match("#<div class=\"content-area\">(.*?)<\/div>#si", $bldg_tr_html, $contents_tr);

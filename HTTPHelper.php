@@ -1,6 +1,8 @@
 <?php
 
+
 namespace ITU_API;
+
 
 class HTTPHelper
 {
@@ -55,5 +57,20 @@ class HTTPHelper
     {
         header("HTTP/1.1 " . $code . " " . $this->status($code));
         header("Content-Type: application/json; charset=utf-8");
+    }
+    function curl_q($callback, $iconv = true)
+    {
+        $cookie = fopen("cook.txt", "w+");
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $callback);
+        curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36");
+        curl_setopt($ch, CURLOPT_COOKIE, $cookie);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+        $return = curl_exec($ch);
+        curl_close($ch);
+        if ($iconv) $return = iconv('ISO-8859-9', 'UTF-8', $return);
+        return $return;
     }
 }
