@@ -12,11 +12,11 @@ class File
     {
         $this->file_name = $file_name;
         $this->file_path = $file_path;
-        $this->file = fopen($this->file_path . $this->file_name, "a");
+        $this->create();
     }
 
     // check if file exists
-    function exists()
+    function does_exist()
     {
         return file_exists($this->file_path . $this->file_name);
     }
@@ -30,7 +30,7 @@ class File
     // create file if it doesn't exist
     function create()
     {
-        if (!$this->exists()) {
+        if (!$this->does_exist()) {
             $this->file = fopen($this->file_path . $this->file_name, "a");
         }
     }

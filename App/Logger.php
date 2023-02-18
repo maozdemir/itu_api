@@ -27,6 +27,13 @@ class Logger
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/log.json",
+     *     @OA\Response(response="200", description="An example resource")
+     * )
+     */
+
     function log($message, $type = LOG_TYPE_INFO)
     {
         $message = "[" . date("Y-m-d H:i:s") . "] [" . $type . "] : " . $message . "\n";

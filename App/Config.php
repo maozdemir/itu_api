@@ -3,6 +3,15 @@
 
 namespace ITU_API;
 
+/**
+ * @OA\OpenApi(
+ *   @OA\ExternalDocumentation(
+ *     description="More documentation here...",
+ *     url="https://example.com/externaldoc1/"
+ *   )
+ * )
+ */
+
 require_once "File.php";
 
 use ITU_API\File as File;
@@ -12,12 +21,13 @@ class Config
     private $config;
     private $config_file;
     private $path = __DIR__;
+    private $file;
 
     function __construct($config_file)
     {
         $this->config_file = $config_file;
         $this->file = new File($this->path, $this->config_file);
-        if (!$this->file->exists()) {
+        if (!$this->file->does_exist()) {
             $this->file->create();
         }
     }

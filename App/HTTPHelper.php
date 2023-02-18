@@ -56,7 +56,8 @@ class HTTPHelper
     public function header_set($code)
     {
         header("HTTP/1.1 " . $code . " " . $this->status($code));
-        header("Content-Type: application/json; charset=utf-8");
+        if ($code == 200)
+            header("Content-Type: application/json; charset=utf-8");
     }
     function curl_q($callback, $iconv = true)
     {

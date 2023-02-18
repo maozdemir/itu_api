@@ -6,3 +6,4 @@
 !*.php
 !*/
 index.php
+vendor/*
